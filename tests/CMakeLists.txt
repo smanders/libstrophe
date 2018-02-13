@@ -18,7 +18,9 @@ set(tests
   test_string
   )
 foreach(exe ${tests})
-  add_executable(${exe} ${exe}.c)
-  target_link_libraries(${exe} testlib)
-  add_test(NAME ${exe} COMMAND ${exe})
+  if(EXISTS ${exe}.c) # there are some tests only in repo, not in download
+    add_executable(${exe} ${exe}.c)
+    target_link_libraries(${exe} testlib)
+    add_test(NAME ${exe} COMMAND ${exe})
+  endif()
 endforeach()
