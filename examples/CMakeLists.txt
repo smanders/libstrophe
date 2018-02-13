@@ -9,4 +9,5 @@ set(examples
 foreach(exe ${examples})
   add_executable(${exe} ${exe}.c)
   target_link_libraries(${exe} libstrophe expat resolv) # TODO library dependencies
+  set_property(TARGET ${exe} PROPERTY FOLDER examples)
 endforeach()

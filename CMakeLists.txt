@@ -2,6 +2,15 @@ cmake_minimum_required(VERSION 3.0)
 project(libstrophe)
 include(flags OPTIONAL)
 enable_testing()
+set_property(GLOBAL PROPERTY USE_FOLDERS ON) # enables MSVC Solution Folders
+########################################
+if(MSVC)
+  add_definitions(
+    -D_CRT_NONSTDC_NO_DEPRECATE
+    -D_CRT_SECURE_NO_WARNINGS
+    -D_WINSOCK_DEPRECATED_NO_WARNINGS
+    )
+endif()
 ########################################
 # version
 set(verString "^AC_INIT.*\\[\([.0-9]*\)\\].*")
