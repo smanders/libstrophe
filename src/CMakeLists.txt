@@ -46,6 +46,7 @@ source_group("" FILES ${${lib_name}_libsrcs})
 ########################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
+target_link_libraries(${lib_name} ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES})
 target_include_directories(${lib_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   )
