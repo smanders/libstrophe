@@ -1,5 +1,5 @@
 add_library(testlib STATIC test.c test.h)
-target_link_libraries(testlib libstrophe resolv) # TODO library dependencies
+target_link_libraries(testlib libstrophe)
 set_property(TARGET testlib PROPERTY FOLDER tests)
 set(tests
   check_parser

@@ -33,7 +33,7 @@ set(${lib_name}_libsrcs
   sock.c
   sock.h
   stanza.c
-  tls_dummy.c
+  #tls_dummy.c # tls_openssl instead
   #tls_gnutls.c # tls_openssl instead
   tls.h
   tls_openssl.c
@@ -46,9 +46,12 @@ source_group("" FILES ${${lib_name}_libsrcs})
 ########################################
 # library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
-target_link_libraries(${lib_name} ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES})
+target_link_libraries(${lib_name} ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES} ${SYS_LIBS})
 target_include_directories(${lib_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  PRIVATE
+  $<BUILD_INTERFACE:${EXPAT_INCLUDE_DIRS}>
+  $<BUILD_INTERFACE:${OPENSSL_INCLUDE_DIR}>
   )
 set_target_properties(${lib_name} PROPERTIES
   OUTPUT_NAME ${lib_name}${ver}
