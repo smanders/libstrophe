@@ -44,6 +44,8 @@ function(checkLibraryConcat lib symbol liblist)
   endif()
 endfunction()
 checkLibraryConcat(resolv __res_query SYS_LIBS)
+checkLibraryConcat(winmm timeGetTime SYS_LIBS)
+checkLibraryConcat(ws2_32 getch SYS_LIBS)
 ########################################
 # version
 set(verString "^AC_INIT.*\\[\([.0-9]*\)\\].*")
