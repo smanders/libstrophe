@@ -53,6 +53,9 @@ target_include_directories(${lib_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_D
   $<BUILD_INTERFACE:${EXPAT_INCLUDE_DIRS}>
   $<BUILD_INTERFACE:${OPENSSL_INCLUDE_DIR}>
   )
+if(DEFINED EXPAT_DEFINITIONS)
+  target_compile_definitions(${lib_name} PUBLIC ${EXPAT_DEFINITIONS})
+endif()
 set_target_properties(${lib_name} PROPERTIES
   OUTPUT_NAME ${lib_name}${ver}
   PREFIX "" # strip off the "lib" prefix, since it's already libstrophe
