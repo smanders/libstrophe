@@ -1,6 +1,5 @@
 set(lib_name ${PROJECT_NAME})
 ########################################
-# source
 set(${lib_name}_libsrcs
   auth.c
   common.h
@@ -44,14 +43,12 @@ set(${lib_name}_libsrcs
   )
 source_group("" FILES ${${lib_name}_libsrcs})
 ########################################
-# library
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
-target_link_libraries(${lib_name} ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES} ${SYS_LIBS})
+target_link_libraries(${lib_name} PRIVATE ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES} ${SYS_LIBS})
 target_include_directories(${lib_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   PRIVATE
   $<BUILD_INTERFACE:${EXPAT_INCLUDE_DIRS}>
-  $<BUILD_INTERFACE:${OPENSSL_INCLUDE_DIR}>
   )
 if(DEFINED EXPAT_DEFINITIONS)
   target_compile_definitions(${lib_name} PUBLIC ${EXPAT_DEFINITIONS})
@@ -61,7 +58,6 @@ set_target_properties(${lib_name} PROPERTIES
   PREFIX "" # strip off the "lib" prefix, since it's already libstrophe
   )
 ########################################
-# install
 set(targetsFile ${PROJECT_NAME}${ver}-targets)
 install(TARGETS ${lib_name} EXPORT ${targetsFile}
   RUNTIME DESTINATION bin
