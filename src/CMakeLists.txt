@@ -44,15 +44,10 @@ set(${lib_name}_libsrcs
 source_group("" FILES ${${lib_name}_libsrcs})
 ########################################
 add_library(${lib_name} STATIC ${${lib_name}_libsrcs})
-target_link_libraries(${lib_name} PRIVATE ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES} ${SYS_LIBS})
-target_include_directories(${lib_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  PRIVATE
-  $<BUILD_INTERFACE:${EXPAT_INCLUDE_DIRS}>
+target_include_directories(${lib_name} PUBLIC $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include${verDir}>
+  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   )
-if(DEFINED EXPAT_DEFINITIONS)
-  target_compile_definitions(${lib_name} PUBLIC ${EXPAT_DEFINITIONS})
-endif()
+target_link_libraries(${lib_name} PRIVATE ${EXPAT_LIBRARIES} ${OPENSSL_LIBRARIES} ${SYS_LIBS})
 set_target_properties(${lib_name} PROPERTIES
   OUTPUT_NAME ${lib_name}${ver}
   PREFIX "" # strip off the "lib" prefix, since it's already libstrophe
@@ -64,4 +59,7 @@ install(TARGETS ${lib_name} EXPORT ${targetsFile}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   )
-install(EXPORT ${targetsFile} DESTINATION lib/cmake)
+if(DEFINED XP_NAMESPACE)
+  set(nameSpace NAMESPACE ${XP_NAMESPACE}::)
+endif()
+install(EXPORT ${targetsFile} DESTINATION lib/cmake ${nameSpace})
